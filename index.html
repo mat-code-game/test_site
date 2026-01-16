@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Code secret (admin)</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: Arial, sans-serif;
+      background: #111;
+      color: #fff;
+    }
+    .container {
+      background: #222;
+      padding: 20px 30px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.5);
+      text-align: center;
+    }
+    .code {
+      font-size: 2em;
+      margin-top: 10px;
+      letter-spacing: 4px;
+    }
+    .info {
+      margin-top: 10px;
+      font-size: 0.9em;
+      color: #ccc;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Code actuel</h1>
+    <!-- Ces deux divs DOIVENT exister avec ces id précis -->
+    <div class="code" id="codeActuel">------</div>
+    <div class="info" id="infoTemps"></div>
+  </div>
+
+  <!-- Le script est placé APRÈS le HTML pour que les éléments soient déjà chargés [web:38][web:40] -->
+  <script>
+    const DUREE_MS = 5 * 60 * 1000; // 5 minutes
+
+    function genererCode(longueur) {
+      const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+      let resultat = "";
+      for (let i = 0; i < longueur; i++) {
+        const index = Math.floor(Math.random() * chars.length);
+        resultat += chars.charAt(index);
+      }
+      return resultat;
+    }
+
+    function obtenirCodeActuel() {
+      const dataBrut = localStorage.getItem("codeSecret");
+      const maintenant = Date.now();
+
+      if (dataBrut) {
+        const data = JSON.parse(dataBrut);
+        const age = maintenant - data.timestamp;
+
+        // Si le code a moins de 5 minutes, on le garde
+        if (age < DUREE_MS) {
+          return data.code;
+        }
+      }
+
+      // Sinon on crée un nouveau code
+      const nouveauCode = genererCode(6);
+      const objet = {
+        code: nouveauCode,
+        timestamp: maintenant
+      };
+      localStorage.setItem("codeSecret", JSON.stringify(objet));
+      return nouveauCode;
+    }
+
+    function mettreAJourAffichage() {
+      const code = obtenirCodeActuel();
+      const codeDiv = document.getElementById("codeActuel");
+      const infoTemps = document.getElementById("infoTemps");
+      const maintenant = new Date();
+
+      // Sécurité: si jamais les éléments n'existent pas, on ne fait rien
+      if (!codeDiv || !infoTemps) return;
+
+      codeDiv.textContent = code;
+      infoTemps.textContent =
+        "Dernière génération (ou rechargement) : " + maintenant.toLocaleTimeString();
+      console.log("Code secret actuel :", code);
+    }
+
+    // Quand la page est chargée, on met à jour l'affichage [web:31][web:37]
+    window.onload = function () {
+      mettreAJourAffichage();
+      // rafraîchir l'affichage toutes les 10 secondes (le code change seulement toutes les 5 min)
+      setInterval(mettreAJourAffichage, 10000);
+    };
+  </script>
+</body>
+</html>
