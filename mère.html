@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Quiz spécial Maman</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: system-ui, sans-serif;
+      background: radial-gradient(circle at top, #e0f2fe, #fef3c7);
+      padding: 16px;
+    }
+
+    #quiz {
+      width: min(640px, 100%);
+      background: #ffffff;
+      border-radius: 18px;
+      padding: 22px 20px 26px;
+      box-shadow: 0 20px 40px rgba(59, 130, 246, 0.35);
+      border: 1px solid rgba(37, 99, 235, 0.3);
+    }
+
+    h1 {
+      font-size: 24px;
+      text-align: center;
+      margin-bottom: 6px;
+      color: #1d4ed8;
+    }
+
+    h2 {
+      font-size: 16px;
+      text-align: center;
+      color: #1e293b;
+      margin-bottom: 12px;
+    }
+
+    .intro {
+      font-size: 13px;
+      text-align: center;
+      color: #475569;
+      margin-bottom: 16px;
+    }
+
+    .question {
+      margin-bottom: 14px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+    }
+
+    .question-title {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: #1e40af;
+    }
+
+    .options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    label {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 13px;
+      color: #0f172a;
+      background: #ffffff;
+      padding: 4px 8px;
+      border-radius: 999px;
+      cursor: pointer;
+      border: 1px solid #e2e8f0;
+      transition: background 0.15s, transform 0.1s, box-shadow 0.1s;
+    }
+
+    label:hover {
+      background: #e0f2fe;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 10px rgba(148, 163, 184, 0.45);
+    }
+
+    input[type="radio"] {
+      accent-color: #1d4ed8;
+    }
+
+    #submit-btn {
+      margin-top: 12px;
+      width: 100%;
+      padding: 8px 16px;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      background: linear-gradient(90deg, #22c55e, #3b82f6);
+      color: white;
+      box-shadow: 0 10px 24px rgba(34, 197, 94, 0.5);
+      transition: transform 0.1s, box-shadow 0.1s, filter 0.15s;
+    }
+
+    #submit-btn:hover {
+      filter: brightness(1.08);
+      transform: translateY(-1px);
+      box-shadow: 0 12px 28px rgba(34, 197, 94, 0.6);
+    }
+
+    #submit-btn:active {
+      transform: translateY(1px) scale(0.98);
+      box-shadow: 0 6px 16px rgba(34, 197, 94, 0.5);
+    }
+
+    #result {
+      margin-top: 12px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      background: #ecfdf5;
+      border: 1px solid #6ee7b7;
+      font-size: 14px;
+      color: #065f46;
+      min-height: 40px;
+    }
+
+    #footer {
+      margin-top: 8px;
+      font-size: 12px;
+      text-align: center;
+      color: #6b7280;
+    }
+
+    #footer span {
+      font-weight: 600;
+      color: #1d4ed8;
+    }
+  </style>
+</head>
+<body>
+  <div id="quiz">
+    <h1>Quiz spécial Maman 💐</h1>
+    <h2>À quel point tu connais ta maman ?</h2>
+    <p class="intro">
+      Réponds aux questions, et à la fin le quiz te dira à quel point tu es un·e expert·e de ta maman.
+    </p>
+
+    <!-- Question 1 -->
+    <div class="question" data-correct="b">
+      <div class="question-title">1. Sa boisson préférée ?</div>
+      <div class="options">
+        <label>
+          <input type="radio" name="q1" value="a">
+          Café noir
+        </label>
+        <label>
+          <input type="radio" name="q1" value="b">
+          Thé / infusion
+        </label>
+        <label>
+          <input type="radio" name="q1" value="c">
+          Jus de fruits
+        </label>
+      </div>
+    </div>
+
+    <!-- Question 2 -->
+    <div class="question" data-correct="c">
+      <div class="question-title">2. Ce qu’elle préfère faire un jour de repos ?</div>
+      <div class="options">
+        <label>
+          <input type="radio" name="q2" value="a">
+          Faire du sport
+        </label>
+        <label>
+          <input type="radio" name="q2" value="b">
+          Ranger toute la maison (vraiment ?)
+        </label>
+        <label>
+          <input type="radio" name="q2" value="c">
+          Se détendre (série, lecture, musique…)
+        </label>
+      </div>
+    </div>
+
+    <!-- Question 3 -->
+    <div class="question" data-correct="a">
+      <div class="question-title">3. Son super‑pouvoir de maman ?</div>
+      <div class="options">
+        <label>
+          <input type="radio" name="q3" value="a">
+          Sentir quand tu vas mal, sans que tu dises rien
+        </label>
+        <label>
+          <input type="radio" name="q3" value="b">
+          Trouver tout ce que tu perds en 3 secondes
+        </label>
+        <label>
+          <input type="radio" name="q3" value="c">
+          Faire disparaître les légumes de ton assiette
+        </label>
+      </div>
+    </div>
+
+    <!-- Question 4 -->
+    <div class="question" data-correct="c">
+      <div class="question-title">4. Son style d’anniversaire idéal ?</div>
+      <div class="options">
+        <label>
+          <input type="radio" name="q4" value="a">
+          Une énorme fête avec plein de monde
+        </label>
+        <label>
+          <input type="radio" name="q4" value="b">
+          Une journée de shopping non‑stop
+        </label>
+        <label>
+          <input type="radio" name="q4" value="c">
+          Un moment simple mais sincère avec sa famille
+        </label>
+      </div>
+    </div>
+
+    <!-- Question 5 -->
+    <div class="question" data-correct="b">
+      <div class="question-title">5. Ce qui la rend le plus heureuse ?</div>
+      <div class="options">
+        <label>
+          <input type="radio" name="q5" value="a">
+          Avoir la maison parfaitement rangée
+        </label>
+        <label>
+          <input type="radio" name="q5" value="b">
+          Sentir qu’on pense à elle et qu’on l’aime
+        </label>
+        <label>
+          <input type="radio" name="q5" value="c">
+          Gagner au loto
+        </label>
+      </div>
+    </div>
+
+    <button id="submit-btn">Voir le résultat ✨</button>
+    <div id="result"></div>
+
+    <div id="footer">
+      Ce quiz est fait avec amour pour <span>l’anniversaire de Maman</span> 🎂
+    </div>
+  </div>
+
+  <script>
+    const submitBtn = document.getElementById("submit-btn");
+    const resultBox = document.getElementById("result");
+    const questions = document.querySelectorAll(".question");
+
+    function computeScore() {
+      let score = 0;
+      let total = questions.length;
+
+      questions.forEach((q, index) => {
+        const correct = q.getAttribute("data-correct");
+        const name = "q" + (index + 1);
+        const selected = document.querySelector(`input[name="${name}"]:checked`);
+        if (selected && selected.value === correct) {
+          score++;
+        }
+      });
+
+      return { score, total };
+    }
+
+    function makeMessage(score, total) {
+      const ratio = score / total;
+      if (ratio === 1) {
+        return "Score : " + score + "/" + total + 
+          " 🌟 Tu connais ta maman par cœur, mais ça, elle le savait déjà.";
+      } else if (ratio >= 0.6) {
+        return "Score : " + score + "/" + total + 
+          " 💕 Tu connais très bien ta maman. Le reste, tu peux le découvrir avec elle aujourd’hui.";
+      } else {
+        return "Score : " + score + "/" + total +
+          " 😊 Pas besoin d’un 20/20 : le plus important, c’est tout l’amour que tu as pour elle.";
+      }
+    }
+
+    submitBtn.addEventListener("click", () => {
+      const { score, total } = computeScore();
+      resultBox.textContent = makeMessage(score, total);
+    });
+  </script>
+</body>
+</html>
